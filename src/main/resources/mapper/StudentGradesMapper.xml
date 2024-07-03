@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hzcu.teacherassistant.mapper.StudentGradeMapper">
+  <resultMap id="BaseResultMap" type="com.domain.Studentgrades">
+    <!--@mbg.generated-->
+    <!--@Table studentgrades-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="grade" jdbcType="DECIMAL" property="grade" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, student_id, course_id, grade
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from studentgrades
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from studentgrades
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.domain.Studentgrades" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into studentgrades (student_id, course_id, grade
+      )
+    values (#{studentId,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{grade,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.domain.Studentgrades" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into studentgrades
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.domain.Studentgrades">
+    <!--@mbg.generated-->
+    update studentgrades
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.domain.Studentgrades">
+    <!--@mbg.generated-->
+    update studentgrades
+    set student_id = #{studentId,jdbcType=INTEGER},
+      course_id = #{courseId,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getGradesByStuId" resultType="org.hzcu.teacherassistant.domain.GradesVO">
+    SELECT
+    users.name,
+    courses.name AS course_name,
+    student_grade.grade
+    FROM
+    users
+    JOIN
+    student_courses ON users.id = student_courses.student_id
+    JOIN
+    courses ON student_courses.course_id = courses.id
+    JOIN
+    student_grade ON users.id = student_grade.student_id AND student_courses.course_id = student_grade.course_id
+    WHERE
+    users.id = #{id}
+    GROUP BY
+    users.id,
+    users.name,
+    student_courses.course_id,
+    courses.name,
+    student_grade.grade;
+  </select>
+</mapper>

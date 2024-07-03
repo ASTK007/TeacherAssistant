@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hzcu.teacherassistant.mapper.AssignmentsMapper">
+  <resultMap id="BaseResultMap" type="org.hzcu.teacherassistant.domain.Assignments">
+    <!--@mbg.generated-->
+    <!--@Table assignments-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="due_date" jdbcType="DATE" property="dueDate" />
+    <result column="sample_file_url" jdbcType="VARCHAR" property="sampleFileUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, course_id, title, description, due_date, sample_file_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from assignments
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from assignments
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.hzcu.teacherassistant.domain.Assignments" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into assignments (course_id, title, description, 
+      due_date, sample_file_url)
+    values (#{courseId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, 
+      #{dueDate,jdbcType=DATE}, #{sampleFileUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.hzcu.teacherassistant.domain.Assignments" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into assignments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="dueDate != null">
+        due_date,
+      </if>
+      <if test="sampleFileUrl != null">
+        sample_file_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="sampleFileUrl != null">
+        #{sampleFileUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.hzcu.teacherassistant.domain.Assignments">
+    <!--@mbg.generated-->
+    update assignments
+    <set>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dueDate != null">
+        due_date = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="sampleFileUrl != null">
+        sample_file_url = #{sampleFileUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.hzcu.teacherassistant.domain.Assignments">
+    <!--@mbg.generated-->
+    update assignments
+    set course_id = #{courseId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR},
+      due_date = #{dueDate,jdbcType=DATE},
+      sample_file_url = #{sampleFileUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
